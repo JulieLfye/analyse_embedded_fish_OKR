@@ -52,6 +52,8 @@ for k = 1:n
             movie = background-d;
             movie = imadjust(movie);
             
+            
+            
             m = floor(nb/1000);
             c = floor((nb-m*1000)/100);
             d = floor((nb-m*1000-c*100)/10);

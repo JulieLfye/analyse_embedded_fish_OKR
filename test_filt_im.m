@@ -1,15 +1,21 @@
-clc;
-close all;
-% clear
+im = imread('C:\Users\Julie Lafaye\Documents\MATLAB\bout1_bin\bin_0151.pgm');
+figure(1)
+imshow(im)
 
-a = exist('path','var');
+ims = bwmorph(im,'close');
+ims = bwmorph(ims,'thin');
+ims = bwmorph(ims,'skel',Inf);
+figure(2)
+imshow(ims)
+I = ims;
 
-if  a == 0
-    disp('Select one frame for creating background file')
-    [file, path] = uigetfile('*.pgm',[],'D:\embedded_fish\OKR_acoustic');
-    im = imread(fullfile(path,file));
+It = bwmorph(I,'thin','inf');
+B =  bwmorph(It,'branchpoints');
+[i,j] = find(bwmorph(It,'endpoints'));
+D = bwdistgeodesic(It,find(B),'quasi');
+imshow(ims);
+for n = 1:numel(i)
+    text(j(n),i(n),[num2str(D(i(n),j(n)))],'color','g');
+    D(i(n),j(n));
 end
 
-rect = getrect;
-im2 = im(rect(2):rect(2)+rect(4)+1,rect(1):rect(1)+rect(3)+1);
-im2f = imnlfilt(im2);
